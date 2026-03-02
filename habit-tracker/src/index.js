@@ -1,0 +1,23 @@
+import "./styles/main.css";
+import { store } from "./state/store.js";
+import { renderHabits } from "./ui/renderHabits.js";
+import { todayStr } from "./services/dateService.js";
+
+store.subscribe(renderHabits);
+store.init();
+
+document.addEventListener("click", (e) => {
+    const action = e.target.dataset.action;
+    const id = e.target.closest("li")?.dataset.id;
+
+    if (action === "toggle" && id) {
+        store.toggleHabit(id, todayStr());
+    }
+
+    if (e.target.id === "add-btn") {
+        const title = prompt("Habit title:");
+        if (title) {
+            store.addHabit({ title, frequency: { type: "daily" } });
+        }
+    }
+});
