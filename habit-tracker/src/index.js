@@ -20,4 +20,12 @@ document.addEventListener("click", (e) => {
             store.addHabit({ title, frequency: { type: "daily" } });
         }
     }
+
+    if (action === "delete" && id) {
+        store.deleteHabit(id);
+    }
+
+    if (action === "archive" && id) {
+        store.toggleArchive(id);
+    }
 });

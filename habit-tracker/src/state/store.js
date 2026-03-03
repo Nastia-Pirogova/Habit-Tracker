@@ -1,11 +1,11 @@
-import { loadHabitsRaw, saveHabitsRaw } from "../services/storageService.js";
-import { Habit } from "../models/Habit.js";
+import {loadHabitsRaw, saveHabitsRaw} from "../services/storageService.js";
+import {Habit} from "../models/Habit.js";
 
 class Store {
     constructor() {
         this.state = {
             habits: [],
-            selectedHabitId: null,
+            selectedHabitId: null
         };
 
         this.listeners = [];
@@ -41,6 +41,28 @@ class Store {
         if (!habit) return;
 
         habit.toggle(dateStr);
+        this.save();
+        this.notify();
+    }
+
+    deleteHabit(id) {
+        const before = this.state.habits.length;
+
+        this.state.habits = this.state.habits.filter((h) => h.id !== id);
+
+        if (this.state.habits.length === before) return;
+
+        this.save();
+        this.notify();
+    }
+
+    toggleArchive(id) {
+        const habit = this.state.habits.find((h) => h.id === id);
+
+        if (!habit) return;
+
+        habit.archived = !habit.archived;
+
         this.save();
         this.notify();
     }
