@@ -11,3 +11,14 @@ body {
     max-width: 900px;
     margin: 0 auto;
 }
+
+.filter-btn {
+    padding: 6px 10px;
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+.filter-btn.is-active {
+    background: black;
+    color: white;
+}

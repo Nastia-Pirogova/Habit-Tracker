@@ -5,7 +5,8 @@ class Store {
     constructor() {
         this.state = {
             habits: [],
-            selectedHabitId: null
+            selectedHabitId: null,
+            filter: "active",
         };
 
         this.listeners = [];
@@ -64,6 +65,11 @@ class Store {
         habit.archived = !habit.archived;
 
         this.save();
+        this.notify();
+    }
+
+    setFilter(filter) {
+        this.state.filter = filter
         this.notify();
     }
 }
