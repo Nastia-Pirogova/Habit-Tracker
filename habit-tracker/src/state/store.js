@@ -72,6 +72,18 @@ class Store {
         this.state.filter = filter
         this.notify();
     }
+
+    updateHabitTitle(id, newTitle) {
+        const habit = this.state.habits.find((h) => h.id === id);
+        if (!habit) return;
+
+        const title = newTitle.trim();
+        if (title.length < 3) return;
+
+        habit.title = title;
+        this.save();
+        this.notify();
+    }
 }
 
 export const store = new Store();

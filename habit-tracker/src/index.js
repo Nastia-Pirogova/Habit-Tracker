@@ -31,4 +31,11 @@ document.addEventListener("click", (e) => {
     }
 
     if (actionFilter) store.setFilter(actionFilter);
+
+    if (action === "edit" && id) {
+        const title = prompt("New title:");
+        if (title) {
+            store.updateHabitTitle(id, title);
+        }
+    }
 });
