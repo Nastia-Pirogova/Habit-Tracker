@@ -14,25 +14,23 @@ https://nastia-pirogova.github.io/Habit-Tracker/habit-tracker/
 
 ## ✨ Features
 
-### ✅ Implemented
-- Modular project structure
 - Centralized Store (single source of truth)
 - Observer / Pub-Sub pattern for UI updates
-- `Habit` model implemented as a class
+- Habit model implemented as a class
 - LocalStorage persistence
 - Toggle habit completion for the current day
 - Automatic UI re-render on state changes
-
-### 🔜 Planned
-- Full CRUD (create / edit / delete habits)
-- Archive habits
+- Full CRUD operations for habits (create / edit / delete)
+- Habit archiving
+- Current and best streak tracking
 - Monthly calendar view
-- Current & best streak calculation
-- 7-day / 30-day completion statistics
-- Filtering & search with debounce
-- Dark mode
+- 7-day and 30-day completion statistics
+- Statistics dashboard
+- Filtering and search with debounce
+- Dark / light theme toggle
 - JSON import / export
 - Drag & Drop reordering
+- Modal window for adding and editing habits
 
 ---
 
@@ -141,17 +139,6 @@ Preview production build:
 ```bash
 npm run preview
 ```
-
-## 🗺 Roadmap
-
-- Modal window for adding/editing habits
-- Filtering and search with debounce
-- Monthly calendar view
-- Streak logic (current & best)
-- Statistics dashboard
-- Dark/light theme toggle
-- JSON import/export
-- Deployment
 
 ## 🎯 Purpose
 
