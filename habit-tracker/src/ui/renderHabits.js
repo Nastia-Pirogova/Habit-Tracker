@@ -68,6 +68,9 @@ function renderHabitList(state) {
           </button>
 
           <button data-action="edit">✏️</button>
+           <span class="streak">🔥 ${h.getCurrentStreak(today)}</span>
+           <span class="best">🏆 ${h.getBestStreak()}</span>
+          
         </li>
       `
         )

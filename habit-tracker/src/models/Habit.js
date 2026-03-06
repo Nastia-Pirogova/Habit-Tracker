@@ -1,4 +1,4 @@
-import {todayStr} from "../services/dateService.js";
+import {todayStr, addDays} from "../services/dateService.js";
 
 export class Habit {
     constructor({
@@ -44,5 +44,41 @@ export class Habit {
             archived: this.archived,
             history: [...this.history],
         };
+    }
+
+    getCurrentStreak(today) {
+        let streak = 0;
+        let currentDate = today;
+
+        while (this.history.has(currentDate)) {
+            streak++;
+            currentDate = addDays(currentDate, -1);
+        }
+
+        return streak;
+    }
+
+    getBestStreak() {
+        if (this.history.size === 0) return 0;
+        const dates = [...this.history].sort();
+
+        let best = 1;
+        let current = 1;
+
+        for (let i = 1; i < dates.length; i++) {
+            const prev = dates[i - 1];
+            const curr = dates[i];
+
+            const nextDay = addDays(prev, 1);
+
+            if (curr === nextDay) {
+                current++;
+                best = Math.max(best, current);
+            } else {
+                current = 1;
+            }
+        }
+
+        return best;
     }
 }
