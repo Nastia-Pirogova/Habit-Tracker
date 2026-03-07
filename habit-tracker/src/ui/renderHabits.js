@@ -12,8 +12,11 @@ function ensureLayout() {
 
     container.innerHTML = `
     <h1>Habit Tracker</h1>
-    <button id="add-btn">Add Habit</button>
-    <input id="search-input" type="text" placeholder="Search habits..." />
+
+    <div class="toolbar">
+      <button id="add-btn">Add Habit</button>
+      <input id="search-input" type="text" placeholder="Search habits..." />
+    </div>
     
     <ul id="habit-list"></ul>
 
@@ -56,20 +59,20 @@ function renderHabitList(state) {
     containerHabitList.innerHTML = habitsToRender
         .map(
             (h) => `
-        <li data-id="${h.id}">
+        <li data-id="${h.id}" class="habit-item">
           <strong>${h.title}</strong>
 
           <button data-action="toggle">
             ${h.isDoneOn(today) ? "✅" : "⬜"}
           </button>
 
-          <button data-action="delete">🗑</button>
+          <button data-action="delete" class="habit-btn-delete">🗑</button>
 
-          <button data-action="archive">
+          <button data-action="archive" class="habit-btn-archive">
             ${h.archived ? "Unarchive" : "Archive"}
           </button>
 
-          <button data-action="edit">✏️</button>
+          <button data-action="edit" class="habit-btn-edit">✏️</button>
            <span class="streak">🔥 ${h.getCurrentStreak(today)}</span>
            <span class="best">🏆 ${h.getBestStreak()}</span>
           
