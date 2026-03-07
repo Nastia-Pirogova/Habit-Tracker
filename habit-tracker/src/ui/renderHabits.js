@@ -1,4 +1,4 @@
-import { todayStr } from "../services/dateService.js";
+import {todayStr} from "../services/dateService.js";
 
 export function renderHabits(state) {
     ensureLayout();
@@ -13,6 +13,7 @@ function ensureLayout() {
     container.innerHTML = `
     <h1>Habit Tracker</h1>
     <button id="add-btn">Add Habit</button>
+    <input id="search-input" type="text" placeholder="Search habits..." />
     
     <ul id="habit-list"></ul>
 
@@ -51,6 +52,7 @@ function renderHabitList(state) {
         return;
     }
 
+
     containerHabitList.innerHTML = habitsToRender
         .map(
             (h) => `
@@ -78,7 +80,16 @@ function renderHabitList(state) {
 }
 
 function getHabitsToRender(state) {
-    return state.habits.filter((h) =>
+    let habits = state.habits.filter((h) =>
         state.filter === "active" ? !h.archived : h.archived
     );
+
+    if (state.query.trim() === "") {
+        return habits;
+    }
+
+    return habits.filter((h) =>
+        h.title.toLowerCase().includes(state.query.toLowerCase())
+    );
+
 }

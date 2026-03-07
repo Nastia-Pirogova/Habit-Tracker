@@ -7,6 +7,7 @@ class Store {
             habits: [],
             selectedHabitId: null,
             filter: "active",
+            query: ""
         };
 
         this.listeners = [];
@@ -82,6 +83,11 @@ class Store {
 
         habit.title = title;
         this.save();
+        this.notify();
+    }
+
+    setQuery(query) {
+        this.state.query = query;
         this.notify();
     }
 }
