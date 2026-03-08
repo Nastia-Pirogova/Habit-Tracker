@@ -46,10 +46,15 @@ function renderHabitList(state) {
     const habitsToRender = getHabitsToRender(state);
 
     if (habitsToRender.length === 0) {
-        const msg =
-            state.filter === "active"
+        let msg = "";
+
+        if (state.query.trim() !== "") {
+            msg = "No habits match your search";
+        } else {
+            msg = state.filter === "active"
                 ? "No active habits yet"
                 : "No archived habits";
+        }
 
         containerHabitList.innerHTML = `<li class="empty">${msg}</li>`;
         return;
@@ -75,6 +80,8 @@ function renderHabitList(state) {
           <button data-action="edit" class="habit-btn-edit">✏️</button>
            <span class="streak">🔥 ${h.getCurrentStreak(today)}</span>
            <span class="best">🏆 ${h.getBestStreak()}</span>
+           <span class="stat">${h.getCompletion(7, today)}/7</span>
+           <span class="stat">${h.getCompletion(30, today)}/30</span>
           
         </li>
       `

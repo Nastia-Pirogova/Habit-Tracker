@@ -160,6 +160,14 @@ h1 {
     background: #fefce8;
 }
 
+.stat {
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #fff7ed;
+    font-weight: 600;
+    font-size: 13px;
+}
+
 #filters {
     display: flex;
     gap: 10px;

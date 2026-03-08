@@ -81,4 +81,18 @@ export class Habit {
 
         return best;
     }
+
+    getCompletion(days, today) {
+        let count = 0;
+
+        for (let i = 0; i < days; i++) {
+            const date = addDays(today, -i);
+
+            if (this.history.has(date)) {
+                count++;
+            }
+        }
+
+        return count;
+    }
 }
