@@ -25,7 +25,18 @@ function ensureLayout() {
       <button class="filter-btn" data-filter="archived">Archived</button>
     </div>
 
+    <div id="modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Add Habit</h2>
     
+        <input id="habit-input" type="text" placeholder="Habit title" />
+    
+        <div class="modal-actions">
+          <button id="modal-save">Save</button>
+          <button id="modal-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
   `;
 }
 

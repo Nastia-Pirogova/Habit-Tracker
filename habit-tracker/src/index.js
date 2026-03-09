@@ -17,11 +17,32 @@ document.addEventListener("click", (e) => {
     }
 
     if (e.target.id === "add-btn") {
-        const title = prompt("Habit title:");
-        if (title) {
-            store.addHabit({title, frequency: {type: "daily"}});
-        }
+        const modal = document.querySelector("#modal");
+        modal.classList.remove("hidden");
     }
+
+    if (e.target.id === "modal-cancel") {
+        const modal = document.querySelector("#modal");
+        const input = document.querySelector("#habit-input");
+
+        modal.classList.add("hidden");
+        input.value = "";
+    }
+
+    if (e.target.id === "modal-save") {
+        const modal = document.querySelector("#modal");
+        const input = document.querySelector("#habit-input");
+
+        const title = input.value.trim();
+
+        if (!title) return;
+
+        store.addHabit({title, frequency: {type: "daily"}});
+
+        modal.classList.add("hidden");
+        input.value = "";
+    }
+
 
     if (action === "delete" && id) {
         store.deleteHabit(id);
