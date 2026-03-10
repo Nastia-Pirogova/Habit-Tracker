@@ -7,16 +7,23 @@ import {debounce} from "./utils/debounce.js";
 store.subscribe(renderHabits);
 store.init();
 
+let modalMode = "add";
+let editingHabitId = null;
+
 document.addEventListener("click", (e) => {
     const action = e.target.dataset.action;
     const actionFilter = e.target.dataset.filter;
     const id = e.target.closest("li")?.dataset.id;
+
 
     if (action === "toggle" && id) {
         store.toggleHabit(id, todayStr());
     }
 
     if (e.target.id === "add-btn") {
+        modalMode = "add"
+        editingHabitId = null
+
         const modal = document.querySelector("#modal");
         modal.classList.remove("hidden");
     }
@@ -37,10 +44,38 @@ document.addEventListener("click", (e) => {
 
         if (!title) return;
 
-        store.addHabit({title, frequency: {type: "daily"}});
+        if (modalMode === "add") {
+            store.addHabit({title, frequency: {type: "daily"}});
+        } else if (modalMode === "edit") {
+            const title = input.value.trim();
+
+            if (!title) return;
+
+            if (title) {
+                store.updateHabitTitle(editingHabitId, title);
+            }
+        }
 
         modal.classList.add("hidden");
         input.value = "";
+    }
+
+    if (action === "edit" && id) {
+        const modal = document.querySelector("#modal");
+        const input = document.querySelector("#habit-input");
+        const modalTitle = document.querySelector("#modal-title");
+
+        const habit = store.state.habits.find((h) => h.id === id);
+        if (!habit) return;
+
+        modalMode = "edit";
+        editingHabitId = id;
+
+        modalTitle.innerText = "Edit Habit";
+        input.value = habit.title;
+
+        modal.classList.remove("hidden");
+        input.focus();
     }
 
 
@@ -54,12 +89,7 @@ document.addEventListener("click", (e) => {
 
     if (actionFilter) store.setFilter(actionFilter);
 
-    if (action === "edit" && id) {
-        const title = prompt("New title:");
-        if (title) {
-            store.updateHabitTitle(id, title);
-        }
-    }
+
 });
 
 const debouncedSearch = debounce((value) => {

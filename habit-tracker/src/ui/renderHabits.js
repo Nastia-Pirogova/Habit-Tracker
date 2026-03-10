@@ -27,7 +27,7 @@ function ensureLayout() {
 
     <div id="modal" class="modal hidden">
       <div class="modal-content">
-        <h2>Add Habit</h2>
+        <h2 id="modal-title">Add Habit</h2>
     
         <input id="habit-input" type="text" placeholder="Habit title" />
     
