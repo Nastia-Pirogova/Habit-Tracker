@@ -2,6 +2,7 @@ import {todayStr} from "../services/dateService.js";
 
 export function renderHabits(state) {
     ensureLayout();
+    renderStats(state);
     renderFilters(state);
     renderHabitList(state);
 }
@@ -12,7 +13,8 @@ function ensureLayout() {
 
     container.innerHTML = `
     <h1>Habit Tracker</h1>
-
+    <div id="stats"></div>
+    
     <div class="toolbar">
       <button id="add-btn">Add Habit</button>
       <input id="search-input" type="text" placeholder="Search habits..." />
@@ -37,6 +39,8 @@ function ensureLayout() {
         </div>
       </div>
     </div>
+    
+
   `;
 }
 
@@ -112,5 +116,27 @@ function getHabitsToRender(state) {
     return habits.filter((h) =>
         h.title.toLowerCase().includes(state.query.toLowerCase())
     );
+
+}
+
+function renderStats(state) {
+    const container = document.querySelector("#stats");
+    const today = todayStr();
+    const total = state.habits.length;
+
+    const completed = state.habits.filter((h) => {
+        return h.isDoneOn(today);
+    }).length;
+
+    const percent = total === 0
+        ? 0
+        : Math.round((completed / total) * 100);
+
+    container.innerHTML = `
+        <div class="stats-item">Habits: ${total}</div>
+        <div class="stats-item">Completed today: ${completed}</div>
+        <div class="stats-item">Completion: ${percent}%</div>
+    `;
+
 
 }
