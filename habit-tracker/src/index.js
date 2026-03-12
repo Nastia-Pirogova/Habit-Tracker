@@ -6,6 +6,11 @@ import {debounce} from "./utils/debounce.js";
 
 store.subscribe(renderHabits);
 store.init();
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+}
 
 let modalMode = "add";
 let editingHabitId = null;
@@ -91,6 +96,12 @@ document.addEventListener("click", (e) => {
 
     if (e.target.id === "theme-toggle") {
         document.body.classList.toggle("dark");
+
+        const theme = document.body.classList.contains("dark")
+            ? "dark"
+            : "light";
+
+        localStorage.setItem("theme", theme);
     }
 
 });
