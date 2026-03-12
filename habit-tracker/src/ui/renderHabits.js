@@ -19,7 +19,12 @@ function ensureLayout() {
       <button id="add-btn">Add Habit</button>
       <input id="search-input" type="text" placeholder="Search habits..." />
       <button id="theme-toggle">🌙</button>
+      <button id="export-btn">Export JSON</button>
+      <button id="import-btn">Import JSON</button>
+      <input id="import-file" type="file" accept="application/json" hidden />
     </div>
+    
+    
     
     <ul id="habit-list"></ul>
 

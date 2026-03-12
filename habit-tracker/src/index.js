@@ -3,6 +3,7 @@ import {store} from "./state/store.js";
 import {renderHabits} from "./ui/renderHabits.js";
 import {todayStr} from "./services/dateService.js";
 import {debounce} from "./utils/debounce.js";
+import {saveHabitsRaw} from "./services/storageService.js";
 
 store.subscribe(renderHabits);
 store.init();
@@ -104,6 +105,26 @@ document.addEventListener("click", (e) => {
         localStorage.setItem("theme", theme);
     }
 
+    if (e.target.id === "export-btn") {
+        const data = JSON.stringify(store.state.habits, null, 2);
+
+        const blob = new Blob([data], {type: "application/json"});
+
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "habits.json";
+        a.click();
+
+        URL.revokeObjectURL(url);
+    }
+
+    if (e.target.id === "import-btn") {
+        const fileInput = document.querySelector("#import-file");
+        fileInput.click();
+    }
+
 });
 
 const debouncedSearch = debounce((value) => {
@@ -113,5 +134,30 @@ const debouncedSearch = debounce((value) => {
 document.addEventListener("input", (e) => {
     if (e.target.id === "search-input") {
         debouncedSearch(e.target.value);
+    }
+});
+
+document.addEventListener("change", (e) => {
+    if (e.target.id === "import-file") {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            try {
+                const text = reader.result;
+                const raw = JSON.parse(text);
+
+                if (!Array.isArray(raw)) return;
+
+                saveHabitsRaw(raw);
+                store.init();
+            } catch (error) {
+                console.error("Invalid JSON file", error);
+            }
+        };
+
+        reader.readAsText(file);
     }
 });
