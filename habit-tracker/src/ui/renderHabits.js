@@ -18,6 +18,7 @@ function ensureLayout() {
     <div class="toolbar">
       <button id="add-btn">Add Habit</button>
       <input id="search-input" type="text" placeholder="Search habits..." />
+      <button id="theme-toggle">🌙</button>
     </div>
     
     <ul id="habit-list"></ul>

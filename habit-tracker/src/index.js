@@ -89,6 +89,9 @@ document.addEventListener("click", (e) => {
 
     if (actionFilter) store.setFilter(actionFilter);
 
+    if (e.target.id === "theme-toggle") {
+        document.body.classList.toggle("dark");
+    }
 
 });
 
