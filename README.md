@@ -8,7 +8,7 @@ The main goal of this project is to strengthen core JavaScript fundamentals, pra
 
 ## 🚀 Demo
 
-https://nastia-pirogova.github.io/Habit-Tracker/habit-tracker/
+https://nastia-pirogova.github.io/Habit-Tracker/
 
 ---
 
