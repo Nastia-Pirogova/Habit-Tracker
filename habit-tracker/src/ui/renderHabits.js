@@ -5,6 +5,7 @@ export function renderHabits(state) {
     renderStats(state);
     renderFilters(state);
     renderHabitList(state);
+    renderCalendar(state);
 }
 
 function ensureLayout() {
@@ -45,7 +46,7 @@ function ensureLayout() {
         </div>
       </div>
     </div>
-    
+    <div id="calendar"></div>
 
   `;
 }
@@ -85,7 +86,7 @@ function renderHabitList(state) {
     containerHabitList.innerHTML = habitsToRender
         .map(
             (h) => `
-        <li data-id="${h.id}" class="habit-item">
+        <li data-id="${h.id}" class="habit-item${h.id === state.selectedHabitId ? ' selected' : ''}" draggable="true">
           <strong>${h.title}</strong>
 
           <button data-action="toggle">
@@ -145,4 +146,76 @@ function renderStats(state) {
     `;
 
 
+}
+
+function renderCalendar(state) {
+    const container = document.querySelector("#calendar");
+
+    if (!state.selectedHabitId) {
+        container.innerHTML = "";
+        return;
+    }
+
+    const habit = state.habits.find(h => h.id === state.selectedHabitId);
+
+    if (!habit) return;
+
+    const year = state.calendarYear;
+    const month = state.calendarMonth;
+    const monthName = new Date(year, month).toLocaleString("en-US", { month: "long" });;
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDay = new Date(year, month, 1 ).getDay();
+    const startOffset = firstDay === 0 ? 6 : firstDay - 1;
+    const calendarCells = [];
+
+    const monthStr = String(month + 1).padStart(2, "0");
+
+    for (let i = 0; i < startOffset; i++) {
+        calendarCells.push("");
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        calendarCells.push(day);
+    }
+
+
+    container.innerHTML = `
+        <div class="calendar-header">Calendar for: ${habit.title}</div>
+   
+        <div class="calendar-nav">
+          <button data-calendar-nav="prev">‹</button>
+          <div class="calendar-month">${monthName} ${year}</div>
+          <button data-calendar-nav="next">›</button>
+        </div>
+        
+        <div class="calendar-weekdays">
+            <span>Mo</span>
+            <span>Tu</span>
+            <span>We</span>
+            <span>Th</span>
+            <span>Fr</span>
+            <span>Sa</span>
+            <span>Su</span>
+          </div>
+
+       <div class="calendar-days">
+          ${calendarCells.map((cell) => {
+            if (cell === "") {
+                return `<span></span>`;
+            }
+            
+            const dayStr = String(cell).padStart(2, "0");
+            const dateStr = `${year}-${monthStr}-${dayStr}`;
+            const isDone = habit.history.has(dateStr);
+
+            if (isDone) {
+                return `<span class="calendar-day done">${cell}</span>`;
+            }
+            
+            return `<span class="calendar-day">${cell}</span>`;
+          }).join("")}
+          
+          
+        </div>
+    `;
 }

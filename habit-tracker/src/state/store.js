@@ -7,7 +7,9 @@ class Store {
             habits: [],
             selectedHabitId: null,
             filter: "active",
-            query: ""
+            query: "",
+            calendarYear: new Date().getFullYear(),
+            calendarMonth: new Date().getMonth(),
         };
 
         this.listeners = [];
@@ -90,6 +92,50 @@ class Store {
         this.state.query = query;
         this.notify();
     }
+
+    selectHabit(id) {
+        this.state.selectedHabitId = id;
+        this.notify();
+    }
+
+    goToPrevMonth(){
+        if (this.state.calendarMonth === 0) {
+            this.state.calendarMonth = 11;
+            this.state.calendarYear--;
+        } else {
+            this.state.calendarMonth--;
+        }
+
+        this.notify();
+    }
+
+    goToNextMonth(){
+        if (this.state.calendarMonth === 11) {
+            this.state.calendarMonth = 0;
+            this.state.calendarYear++;
+        } else {
+            this.state.calendarMonth++;
+        }
+
+        this.notify();
+    }
+
+    reorderHabits(draggedId, targetId) {
+        const habits = [...this.state.habits];
+
+        const draggedIndex = habits.findIndex((h) => h.id === draggedId);
+        const targetIndex = habits.findIndex((h) => h.id === targetId);
+
+        if (draggedIndex === -1 || targetIndex === -1) return;
+
+        const [movedHabit] = habits.splice(draggedIndex, 1);
+        habits.splice(targetIndex, 0, movedHabit);
+
+        this.state.habits = habits;
+        this.save();
+        this.notify();
+    }
+
 }
 
 export const store = new Store();

@@ -132,7 +132,7 @@ h1 {
     border: none;
     background: #111827;
     color: #fff;
-    padding: 0 16px;
+    padding: 0 12px;
     border-radius: 10px;
     cursor: pointer;
     font-size: 15px;
@@ -228,6 +228,11 @@ h1 {
 .habit-btn-edit:hover {
     background: #dbeafe;
     border-color: #93c5fd;
+}
+
+.habit-item.selected {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
 }
 
 .streak,
@@ -367,6 +372,125 @@ h1 {
     font-weight: 600;
 }
 
+.dark #calendar {
+    background: #294069;
+    border: 1px solid #44567a;
+}
+
+.dark .calendar-weekdays span {
+    color: #fff;
+}
+
+.dark .calendar-days span {
+    border: 1px solid #516787;
+    background: #44577a;
+    color: #ffffff;
+}
+
+.dark .calendar-day.done {
+    border: 1px solid #b0c8ec;
+    background: #111827;
+}
+
+.dark .calendar-nav button {
+    border: 1px solid #44577a;
+    background: #111827;
+    color: #fff;
+}
+
+.dark .calendar-nav button:hover {
+    background: #172033;
+}
+
+.calendar-day.done {
+    border: 1px solid #111827;
+    background: #f9fafb;
+}
+
+#calendar {
+    margin-top: 24px;
+    padding: 16px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-header {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.calendar-month {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.calendar-weekdays,
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.calendar-weekdays span,
+.calendar-days span {
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 8px;
+}
+
+.calendar-weekdays span {
+    font-weight: 700;
+    color: #6b7280;
+}
+
+.calendar-days span {
+    background: white;
+    border: 1px solid #e5e7eb;
+    min-height: 36px;
+}
+
+.calendar-days span:empty {
+    background: transparent;
+    border: none;
+}
+
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    gap: 12px;
+}
+
+.calendar-nav button {
+    border: 1px solid #d1d5db;
+    background: #fff;
+    border-radius: 10px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s ease;
+}
+
+.calendar-nav button:hover {
+    background: #eef2ff;
+    border-color: #c7d2fe;
+}
+
+.calendar-month {
+    font-weight: 700;
+    font-size: 16px;
+}
 
 @media (max-width: 640px) {
     #app {

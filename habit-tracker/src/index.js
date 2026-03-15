@@ -15,6 +15,7 @@ if (savedTheme === "dark") {
 
 let modalMode = "add";
 let editingHabitId = null;
+let draggedHabitId = null;
 
 document.addEventListener("click", (e) => {
     const action = e.target.dataset.action;
@@ -84,7 +85,6 @@ document.addEventListener("click", (e) => {
         input.focus();
     }
 
-
     if (action === "delete" && id) {
         store.deleteHabit(id);
     }
@@ -125,6 +125,17 @@ document.addEventListener("click", (e) => {
         fileInput.click();
     }
 
+    if (id && !action && !actionFilter) {
+        store.selectHabit(id)
+    }
+
+    if (e.target.dataset.calendarNav === "prev") {
+        store.goToPrevMonth()
+    }
+
+    if (e.target.dataset.calendarNav === "next") {
+        store.goToNextMonth()
+    }
 });
 
 const debouncedSearch = debounce((value) => {
@@ -160,4 +171,35 @@ document.addEventListener("change", (e) => {
 
         reader.readAsText(file);
     }
+});
+
+
+
+document.addEventListener("dragstart", (e) => {
+    const li = e.target.closest("li");
+    if (!li) return;
+
+    draggedHabitId = li.dataset.id;
+});
+
+document.addEventListener("dragover", (e) => {
+    const li = e.target.closest("li");
+    if (!li) return;
+
+    e.preventDefault();
+});
+
+document.addEventListener("drop", (e) => {
+    const li = e.target.closest("li");
+    if (!li) return;
+
+    e.preventDefault();
+
+    const targetId = li.dataset.id;
+    console.log("drop", { draggedHabitId, targetId });
+
+    if (!draggedHabitId || !targetId || draggedHabitId === targetId) return;
+
+    store.reorderHabits(draggedHabitId, targetId);
+    draggedHabitId = null;
 });
