@@ -152,7 +152,7 @@ function renderCalendar(state) {
     const container = document.querySelector("#calendar");
 
     if (!state.selectedHabitId) {
-        container.innerHTML = "";
+        container.innerHTML = `<div class="calendar-empty">Select a habit</div>`;
         return;
     }
 

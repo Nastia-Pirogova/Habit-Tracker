@@ -413,6 +413,7 @@ h1 {
     background: #f9fafb;
     border: 1px solid #e5e7eb;
     border-radius: 14px;
+    text-align: center;
 }
 
 .calendar-weekdays {
