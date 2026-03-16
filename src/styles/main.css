@@ -495,8 +495,12 @@ h1 {
 
 @media (max-width: 640px) {
     #app {
-        margin: 20px;
+        margin: 6px;
         padding: 18px;
+    }
+
+    #add-btn, #export-btn, #import-btn {
+        padding: 12px;
     }
 
     h1 {
